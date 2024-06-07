@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify
 from pytube import YouTube
 import os
 
@@ -18,10 +18,11 @@ def Download():
         new = base + '.mp3'
         os.rename(output,new)
 
-        return send_file(output_path, as_attachment=True)
+        return send_file(output, as_attachment=True)
 
     except Exception as e:
-        return False
+        return jsonify(error=str(e)), 500
+
     
 
 if __name__ == '__main__':
