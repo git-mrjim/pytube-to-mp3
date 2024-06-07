@@ -10,6 +10,7 @@ def Download():
     try:
         url = request.args.get('url')
         path = request.args.get('path')
+
         yt = YouTube(url)
         video = yt.streams.filter(only_audio=True).first()
         output = video.download(output_path=path)
@@ -18,7 +19,7 @@ def Download():
         new = base + '.mp3'
         os.rename(output,new)
 
-        return send_file(output, as_attachment=True)
+        return send_file(new, as_attachment=True)
 
     except Exception as e:
         return jsonify(error=str(e)), 500
